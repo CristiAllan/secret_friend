@@ -1,35 +1,13 @@
-require "rails_helper"
+class CampaignMailer < ApplicationMailer
 
-RSpec.describe CampaignMailer, type: :mailer do
-  describe "raffle" do
+  # Subject can be set in your I18n file at config/locales/en.yml
+  # with the following lookup:
+  #
+  #   en.campaign_mailer.raffle.subject
+  #
+  def raffle
+    @greeting = "Hi"
 
-    before do
-      @campaign = create(:campaign)
-      @member   = create(:member, campaign: @campaign)
-      @mail = CampaignMailer.raffle(@campaign, @member, @friend)
-    end
-
-
-    it "renders the headers" do
-      expect(@mail.subject).to eq("Nosso Amigo Secreto: #{@campaign.title}")
-      expect(@mail.to).to eq([@member.email])
-    end
-
-    it "body have member name" do
-      expect(@mail.body.encoded).to match(@member.name)
-    end
-
-    it "body have campaign creator name" do
-      expect(@mail.body.encoded).to match(@campaign.user.name)
-    end
-
-    it "body have friend name" do
-      expect(@mail.body.encoded).to match(@friend.name)
-    end
-
-    it "body have member link to set open" do
-      expect(@mail.body.encoded).to match("/members/#{@member.token}/opened")
-    end
+    mail to: "to@example.org"
   end
-
 end
